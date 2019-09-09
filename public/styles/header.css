@@ -1,0 +1,17 @@
+header {
+    height: 16.6em ;
+    margin-top: 5em;
+    margin-bottom: 0px;
+    display: flex;
+    flex-direction: column;
+   align-items: center;
+   background-color: #9fb6e0;
+   background-image: url("https://www.transparenttextures.com/patterns/brushed-alum.png");
+   color: #ffffff;
+   
+   
+}
+header h2 {
+    margin-top: 0%;
+   
+}
