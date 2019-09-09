@@ -1,0 +1,30 @@
+.new-tweet form {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+  height: 6.3em;
+  justify-content: center;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+.new-tweet form textarea {
+  border-top: 0px;
+  border-right: 0px;
+  border-left: 0px;
+  border-bottom: 5px solid black;
+  background: transparent;
+}
+.new-tweet form footer {
+  font-family: "Bungee", cursive;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.5em;
+}
+
+.new-tweet form footer input {
+  background-color: #42549f;
+  border: none;
+  color: #fff;
+}
