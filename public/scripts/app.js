@@ -1,6 +1,44 @@
 $(document).ready(function() {
+  //RENDERS THE DATA ON THE TWEET APPLICATION 
   renderTweets(data)
+
+//create an AJAX POST request 
+const form = $('#tweet-form')
+form.on('submit',(evt)=>{
+  console.log('About to submit form!!!')
+  evt.preventDefault()
+  let tweet_content = $(".tweetMessage").val()
+  console.log(tweet_content)
+  $.ajax({
+    url:'/tweets/',
+    type:'POST',
+    data:{
+      text:tweet_content,
+    }
+  }).done(data=>{
+    console.log(data)
+    console.log('success!!!')
+  }).fail((err)=>{
+    console.log('error',err)
+  }).always(()=>{
+    console.log('completed!!!')
+  })
+  evt.preventDefault()
+})
+
+
 });
+
+
+
+
+
+
+
+
+
+
+
 
 const data = [
     {

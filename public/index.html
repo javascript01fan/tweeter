@@ -63,9 +63,10 @@
     <!-- Page-specific (main) content here -->
     <main class="container">
       <section class="new-tweet">
-        <form  action="/tweets/" method="POST">
+        <form id="tweet-form" action="/tweets/" method="POST">
           <textarea
           id="txt"
+          class="tweetMessage"
             name="text"
             placeholder="What are you humming about?"
           ></textarea>
@@ -76,7 +77,7 @@
         </form>
       </section>
       <section id="tweetsDisplay" >
-          <article class="tweets">
+          <!-- <article class="tweets">
             <header>
               <div class="headerWrapper">
                 <img class="profileImg" src="images/emoji_3.png" alt="profile image">
@@ -96,9 +97,9 @@
                   <i class="fas fa-heart"></i>
               </div>
             </footer>
-          </article>
+          </article> -->
       </section >
-      <section id="tweetsDisplay" >
+    <!--   <section id="tweetsDisplay" >
           <article class="tweets">
             <header>
               <div class="headerWrapper">
@@ -120,7 +121,8 @@
               </div>
             </footer>
           </article>
-      </section >
+      </section > -->
     </main>
+    
   </body>
 </html>
