@@ -8,7 +8,8 @@ form.on('submit',(evt)=>{
   console.log('About to submit form!!!')
   evt.preventDefault()
   let tweet_content = $(".tweetMessage").val()
-  console.log(tweet_content)
+  console.log(tweet_content.length)
+  formValidation(tweet_content)
   $.ajax({
     url:'/tweets/',
     type:'POST',
@@ -16,7 +17,7 @@ form.on('submit',(evt)=>{
       text:tweet_content,
     }
   }).done(data=>{
-    console.log(data)
+    console.log( typeof data)
     console.log('success!!!')
   }).fail((err)=>{
     console.log('error',err)
@@ -30,11 +31,12 @@ loadTweets('GET',' http://localhost:8080/tweets',renderTweets)
 });
 //*_*_*_*_*_*_*_*__*__*_*_*_*__**_*_*_*__
 //Function to check form validation 
-const formValidation = function(char,inputValue){
-  if(char > 140 ){
-    alert('You are over 140 characters!!!!')
-  }if(inputValue === ''){
-    alert
+
+const formValidation = function(str){
+  if(str.length > 140 ){
+    $('#errMessage').text('You are over 140 characters!!!!').css({'color':'red'})
+  }if(str === ''){
+    $('#errMessage').text('Type something!!').css({'color':'blue'})
   }
 }
 
