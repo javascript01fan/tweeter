@@ -1,7 +1,8 @@
 #tweetsDisplay article {
    
-    height: 250px;
+    min-height: 250px;
     padding: .5em ;
+    
 }
 .profileImg{
     width: 1.6em;
