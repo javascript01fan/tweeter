@@ -7,7 +7,7 @@ $(document).ready(function() {
   form.on("submit", evt => {
     console.log("About to submit form!!!");
     evt.preventDefault();
-    let tweet_content = $(".tweetMessage").val();
+    let tweet_content = EscapCharacters($(".tweetMessage").val())
     formValidation(tweet_content);
     $.ajax({
       url: "/tweets/",
@@ -19,6 +19,8 @@ $(document).ready(function() {
       .done(() => {
         loadTweets("GET", "/tweets", renderTweets);
         resetForm();
+       
+
         console.log("success!!!");
       })
       .fail(err => {
@@ -30,7 +32,14 @@ $(document).ready(function() {
   });
   loadTweets("GET", " http://localhost:8080/tweets", renderTweets);
 });
-
+///_*_*_*_*_*_*_*_*_*_*_*_*_*_*_
+function EscapCharacters (str) {
+  if (typeof jQuery !== 'undefined') {
+    // Create an empty div to use as a container,
+    // then put the raw text in and get the HTML
+    // equivalent out.
+    return jQuery('<div/>').text(str).html();}
+  }
 //&_&_&_&_&_&_&_&_&_&_&_&_&_&_&_&_&_&_&_
 const resetForm = function() {
   const maxCounterReset = 140;
@@ -94,7 +103,7 @@ const data = [
 const renderTweets = function(tweets) {
   // loops through tweets
   return tweets.forEach(obj => {
-    $("#tweetsDisplay").append(createTweetElement(obj));
+    $("#tweetsDisplay").prepend(createTweetElement(obj));
   });
   // calls createTweetElement for each tweet
   // takes return value and appends it to the tweets container
