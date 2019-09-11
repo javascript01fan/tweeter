@@ -1,4 +1,4 @@
-$(document).ready(function() {
+/* $(document).ready(function() {
   //RENDERS THE DATA ON THE TWEET APPLICATION 
   renderTweets(data)
 
@@ -106,6 +106,11 @@ const createTweetElement = function(data) {
 </article>`);
 return element
 };
+ */
 
 
+let x = 1568223719896
 
+let date = new Date(x)
+console.log(date)
+console.log(`${date.getUTCMonth()}`)

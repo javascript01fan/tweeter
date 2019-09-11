@@ -25,11 +25,30 @@ form.on('submit',(evt)=>{
   })
   evt.preventDefault()
 })
-
+loadTweets('GET',' http://localhost:8080/tweets',renderTweets)
 
 });
+//*_*_*_*_*_*_*_*__*__*_*_*_*__**_*_*_*__
+//Function to check form validation 
+const formValidation = function(char,inputValue){
+  if(char > 140 ){
+    alert('You are over 140 characters!!!!')
+  }if(inputValue === ''){
+    alert
+  }
+}
 
-
+//_+_+_+_+_+_+_+_+_+_+_++_+_+_+_+_+_+_
+//Function load tweets
+const loadTweets = function(method,url,cb){
+$.ajax({
+  method,
+  url
+}).done(response =>{
+cb(response)
+  console.log(response)
+})
+}
 
 
 
@@ -64,7 +83,7 @@ const data = [
       "created_at": 1461113959088
     }
   ]
-
+//function Redner Tweets
 const renderTweets = function(tweets) {
     // loops through tweets
   return  tweets.forEach(obj => {
