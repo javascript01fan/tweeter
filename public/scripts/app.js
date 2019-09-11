@@ -2,12 +2,14 @@ $(document).ready(function() {
   //RENDERS THE DATA ON THE TWEET APPLICATION
   renderTweets(data);
 
+  //scroll to bottom of page
+  scrollDown('.fas')
   //create an AJAX POST request
   const form = $("#tweet-form");
   form.on("submit", evt => {
     console.log("About to submit form!!!");
     evt.preventDefault();
-    let tweet_content = EscapCharacters($(".tweetMessage").val())
+    let tweet_content = escapedChar($(".tweetMessage").val())
     formValidation(tweet_content);
     $.ajax({
       url: "/tweets/",
@@ -33,22 +35,23 @@ $(document).ready(function() {
   loadTweets("GET", " http://localhost:8080/tweets", renderTweets);
 });
 ///_*_*_*_*_*_*_*_*_*_*_*_*_*_*_
-function EscapCharacters (str) {
+//Function to prevent XSS
+
+function escapedChar (str) {
   if (typeof jQuery !== 'undefined') {
     // Create an empty div to use as a container,
     // then put the raw text in and get the HTML
     // equivalent out.
     return jQuery('<div/>').text(str).html();}
   }
-//&_&_&_&_&_&_&_&_&_&_&_&_&_&_&_&_&_&_&_
+
 const resetForm = function() {
   const maxCounterReset = 140;
   $("#txt").val("");
   $("#counter").text(maxCounterReset);
 };
-//*_*_*_*_*_*_*_*__*__*_*_*_*__**_*_*_*__
-//Function to check form validation
 
+//Function to check form validation
 const formValidation = function(str) {
   if (str.length > 140) {
     $("#errMessage")
@@ -62,7 +65,6 @@ const formValidation = function(str) {
   }
 };
 
-//_+_+_+_+_+_+_+_+_+_+_++_+_+_+_+_+_+_
 //Function load tweets
 const loadTweets = function(method, url, cb) {
   $.ajax({
@@ -74,31 +76,6 @@ const loadTweets = function(method, url, cb) {
   });
 };
 
-const data = [
-  {
-    user: {
-      name: "Newton",
-      avatars: "https://i.imgur.com/73hZDYK.png",
-      handle: "@SirIsaac"
-    },
-    content: {
-      text:
-        "If I have seen further it is by standing on the shoulders of giants"
-    },
-    created_at: 1461116232227
-  },
-  {
-    user: {
-      name: "Descartes",
-      avatars: "https://i.imgur.com/nlhLi3I.png",
-      handle: "@rd"
-    },
-    content: {
-      text: "Je pense , donc je suis"
-    },
-    created_at: 1461113959088
-  }
-];
 //function Redner Tweets
 const renderTweets = function(tweets) {
   // loops through tweets
@@ -133,3 +110,35 @@ const createTweetElement = function(data) {
 </article>`);
   return element;
 };
+const data = [
+  {
+    user: {
+      name: "Newton",
+      avatars: "https://i.imgur.com/73hZDYK.png",
+      handle: "@SirIsaac"
+    },
+    content: {
+      text:
+        "If I have seen further it is by standing on the shoulders of giants"
+    },
+    created_at: 1461116232227
+  },
+  {
+    user: {
+      name: "Descartes",
+      avatars: "https://i.imgur.com/nlhLi3I.png",
+      handle: "@rd"
+    },
+    content: {
+      text: "Je pense , donc je suis"
+    },
+    created_at: 1461113959088
+  }
+];
+//function to scroll down to the bottom of the page
+const scrollDown = function(tag){
+  $(tag).click(function(){
+  $('.new-tweet').slideToggle('slow')
+  $('#txt').focus()
+});
+}
