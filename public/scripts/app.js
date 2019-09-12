@@ -1,19 +1,20 @@
 $(document).ready(function() {
- 
-
-  $("#errMessage").hide()
-  //RENDERS THE DATA ON THE TWEET APPLICATION
-  renderTweets(data);
+  //Hide the error message
+  $("#errMessage").hide();
 
   //scroll to bottom of page
-  scrollDown('.fas')
-  //create an AJAX POST request
+  scrollDown(".fas");
+
+  //create a const for the form
   const form = $("#tweet-form");
+  //create an AJAX POST request
   form.on("submit", evt => {
-    console.log("About to submit form!!!");
+    //prevent default
     evt.preventDefault();
-    let tweet_content = escapedChar($(".tweetMessage").val())
+    //Check for any XSS
+    let tweet_content = escapedChar($(".tweetMessage").val());
     formValidation(tweet_content);
+    //Send a request
     $.ajax({
       url: "/tweets/",
       type: "POST",
@@ -22,32 +23,33 @@ $(document).ready(function() {
       }
     })
       .done(() => {
-        loadTweets("GET", "/tweets", renderTweets);
+        loadNewTweets("GET", "/tweets", renderTweets);
         resetForm();
-       
-
-        console.log("success!!!");
+        // console.log("success!!!");// if form submitted
       })
       .fail(err => {
-        console.log("error", err);
+        // console.log("error", err);//if error
       })
       .always(() => {
-        console.log("completed!!!");
+        // console.log("completed!!!");//completed
       });
   });
+  //Load tweets and reder them
   loadTweets("GET", " http://localhost:8080/tweets", renderTweets);
 });
-///_*_*_*_*_*_*_*_*_*_*_*_*_*_*_
-//Function to prevent XSS
 
-function escapedChar (str) {
-  if (typeof jQuery !== 'undefined') {
+//Function to prevent XSS
+function escapedChar(str) {
+  if (typeof jQuery !== "undefined") {
     // Create an empty div to use as a container,
     // then put the raw text in and get the HTML
     // equivalent out.
-    return jQuery('<div/>').text(str).html();}
+    return jQuery("<div/>")
+      .text(str)
+      .html();
   }
-
+}
+//Reset Form afer submission
 const resetForm = function() {
   const maxCounterReset = 140;
   $("#txt").val("");
@@ -57,22 +59,26 @@ const resetForm = function() {
 //Function to check form validation
 const formValidation = function(str) {
   if (str.length > 140) {
-    $("#errMessage").slideDown().text("You are over 140 characters!!!!").css({color:'red'})
+    $("#errMessage")
+      .slideDown()
+      .text("You are over 140 characters!!!!")
+      .css({ color: "red" });
     /*   .text("You are over 140 characters!!!!")
       .css({ color: "red" }); */
   }
-   if (str === '') {
-    $("#errMessage").slideDown().text("Type something!!")
-      /* .text("Type something!!")
+  if (str === "") {
+    $("#errMessage")
+      .slideDown()
+      .text("Type something!!");
+    /* .text("Type something!!")
       .css({ color: "blue" }); */
   }
-  $('body').on('click',()=>{
-    $("#errMessage").slideUp()
-  })
-  
+  $("body").on("click", () => {
+    $("#errMessage").slideUp();
+  });
 };
 
-//Function load tweets
+//load tweets
 const loadTweets = function(method, url, cb) {
   $.ajax({
     method,
@@ -83,17 +89,33 @@ const loadTweets = function(method, url, cb) {
   });
 };
 
-//function Redner Tweets
-const renderTweets = function(tweets) {
-  // loops through tweets
-  return tweets.forEach(obj => {
-    $("#tweetsDisplay").prepend(createTweetElement(obj));
+//Load new tweets
+const loadNewTweets = function(method, url, cb) {
+  $.ajax({
+    method,
+    url
+  }).done(response => {
+    cb(response[response.length - 1]);
   });
-  // calls createTweetElement for each tweet
-  // takes return value and appends it to the tweets container
 };
 
+//function Render Tweets
+const renderTweets = function(tweets) {
+  // loops through tweets
+  console.log(tweets);
+  if (Array.isArray(tweets)) {
+    return tweets.forEach(obj => {
+      $("#tweetsDisplay").prepend(createTweetElement(obj));
+    });
+  } else {
+    $("#tweetsDisplay").prepend(createTweetElement(tweets));
+  }
+};
+
+//Create tweet element
 const createTweetElement = function(data) {
+  let date = new Date(data.created_at)
+
   let element = $(` <article class="tweets">
  <header>
    <div class="headerWrapper">
@@ -107,7 +129,7 @@ const createTweetElement = function(data) {
    <hr>
  </section>
  <footer>
-   <span> ${data.created_at} </span>
+   <span> ${date.toLocaleString()} </span>
    <div class="iconsWrapper">
        <i class="fas fa-flag"></i>
        <i class="fas fa-retweet"></i>
@@ -117,35 +139,30 @@ const createTweetElement = function(data) {
 </article>`);
   return element;
 };
-const data = [
-  {
-    user: {
-      name: "Newton",
-      avatars: "https://i.imgur.com/73hZDYK.png",
-      handle: "@SirIsaac"
-    },
-    content: {
-      text:
-        "If I have seen further it is by standing on the shoulders of giants"
-    },
-    created_at: 1461116232227
-  },
-  {
-    user: {
-      name: "Descartes",
-      avatars: "https://i.imgur.com/nlhLi3I.png",
-      handle: "@rd"
-    },
-    content: {
-      text: "Je pense , donc je suis"
-    },
-    created_at: 1461113959088
-  }
-];
+
 //function to scroll down to the bottom of the page
-const scrollDown = function(tag){
-  $(tag).click(function(){
-  $('.new-tweet').slideToggle('slow')
-  $('#txt').focus()
+const scrollDown = function(tag) {
+  $(tag).click(function() {
+    $(".new-tweet").slideToggle("slow");
+    $("#txt").focus();
+  });
+};
+
+//scroll top
+$(document).scroll(function() {
+  var scrollPercent = Math.round(
+    (100 * $(window).scrollTop()) / ($(document).height() - $(window).height())
+  );
+  var y = $(this).scrollTop();
+  if (scrollPercent >= 95) {
+    $(".scrollUpBar").fadeIn();
+  } else {
+    $(".scrollUpBar").fadeOut();
+  }
 });
-}
+$(document).ready(function(){
+  $(".scrollUpBar").click(function() {
+    $("html, body").animate({ scrollTop: 0 }, "slow");
+  });
+  
+})

@@ -27,8 +27,10 @@
     flex-direction: column;
     justify-content: space-between;
     border: solid 1px black;
+    border-radius: 20px;
     margin: .9em 0em;
     transition: .5s;
+    background: white;
    
 }
 .tweets:hover{

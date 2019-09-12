@@ -16,6 +16,7 @@
  * Global layout stuff
  */
 
+ 
 body {
   font-family: "Source Sans Pro", sans-serif;
   color: #545149;
@@ -23,6 +24,7 @@ body {
   font-size: 24px;
 }
 
+@media(max-width:768px){
 .container {
   width: 90%;
   padding: 0px;
@@ -32,6 +34,32 @@ body {
 .container p {
   margin: 0px;
 }
+/* Footer */
+
+.btnPointer{
+  width: 40px;
+  height: 40px;
+  background-color: red;
+}
+}
+/* End fo tablet media query */
+@media(min-width:768px){
+	.bodyWrapper{
+   display: flex;
+   padding-top: 120px;
+   margin: 0 auto;
+  }		
+  .container{
+    width: 50%;
+  margin: 20px;
+  }
+  .topHeader{
+    width: 50%;
+    margin: 20px;
+    padding-top: 20px;
+  }
+}
+
 /*
  * Additional CSS can be defined below or in other CSS files, as per instructions
  */
