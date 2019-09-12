@@ -1,4 +1,7 @@
 $(document).ready(function() {
+ 
+
+  $("#errMessage").hide()
   //RENDERS THE DATA ON THE TWEET APPLICATION
   renderTweets(data);
 
@@ -54,15 +57,19 @@ const resetForm = function() {
 //Function to check form validation
 const formValidation = function(str) {
   if (str.length > 140) {
-    $("#errMessage")
-      .text("You are over 140 characters!!!!")
-      .css({ color: "red" });
+    $("#errMessage").slideDown().text("You are over 140 characters!!!!").css({color:'red'})
+    /*   .text("You are over 140 characters!!!!")
+      .css({ color: "red" }); */
   }
-  if (str === "") {
-    $("#errMessage")
-      .text("Type something!!")
-      .css({ color: "blue" });
+   if (str === '') {
+    $("#errMessage").slideDown().text("Type something!!")
+      /* .text("Type something!!")
+      .css({ color: "blue" }); */
   }
+  $('body').on('click',()=>{
+    $("#errMessage").slideUp()
+  })
+  
 };
 
 //Function load tweets

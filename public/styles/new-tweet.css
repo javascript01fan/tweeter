@@ -28,3 +28,6 @@
   border: none;
   color: #fff;
 }
+#errMessage {
+  display: none;
+}
