@@ -17,5 +17,5 @@ This repository is the starter code for the project: Students will fork and clon
 - Node 5.10.x or above
 - jQuery
 ## Final Product
-!["main-page"]()
+!["main-page"](https://github.com/javascript01fan/tweeter/blob/master/public/images/main-app.png)
 
