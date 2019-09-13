@@ -110,7 +110,10 @@ return element
 
 
 let x = 1568223719896
+let currentTime = new Date().getMinutes()
+let tweetTime = new Date(x)
+console.log(currentTime);
 
-let date = new Date(x)
-console.log(date)
-console.log(`${date.getUTCMonth()}`)
+let tweetTime = new Date(x)
+console.log(tweetTime.getMinutes() - currentTime)
+console.log(`${tweetTime.getUTCMonth()}`)

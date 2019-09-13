@@ -48,13 +48,24 @@ body {
    display: flex;
    padding-top: 120px;
    margin: 0 auto;
-  }		
+  
+  }	
+  .bodyWrapper{
+    position: relative;
+  }
+  .topHeader{
+    position: fixed;
+  }
   .container{
+    position: absolute;
+    
+    right: 0;
     width: 50%;
   margin: 20px;
   }
   .topHeader{
-    width: 50%;
+    top: 4%;
+    width: 40%;
     margin: 20px;
     padding-top: 20px;
   }

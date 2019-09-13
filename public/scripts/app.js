@@ -1,7 +1,7 @@
 $(document).ready(function() {
   //Hide the error message
   $("#errMessage").hide();
-
+  $(".new-tweet").slideUp();
   //scroll to bottom of page
   scrollDown(".fas");
 
@@ -9,6 +9,7 @@ $(document).ready(function() {
   const form = $("#tweet-form");
   //create an AJAX POST request
   form.on("submit", evt => {
+   
     //prevent default
     evt.preventDefault();
     //Check for any XSS
@@ -84,6 +85,7 @@ const loadTweets = function(method, url, cb) {
     method,
     url
   }).done(response => {
+   
     cb(response);
     console.log(response);
   });
@@ -115,7 +117,7 @@ const renderTweets = function(tweets) {
 //Create tweet element
 const createTweetElement = function(data) {
   let date = new Date(data.created_at)
-
+  
   let element = $(` <article class="tweets">
  <header>
    <div class="headerWrapper">
@@ -140,7 +142,7 @@ const createTweetElement = function(data) {
   return element;
 };
 
-//function to scroll down to the bottom of the page
+//function to scroll
 const scrollDown = function(tag) {
   $(tag).click(function() {
     $(".new-tweet").slideToggle("slow");
