@@ -9,7 +9,6 @@ $(document).ready(function() {
   const form = $("#tweet-form");
   //create an AJAX POST request
   form.on("submit", evt => {
-   
     //prevent default
     evt.preventDefault();
     //Check for any XSS
@@ -26,6 +25,7 @@ $(document).ready(function() {
       .done(() => {
         loadNewTweets("GET", "/tweets", renderTweets);
         resetForm();
+        animation("#logo");
         // console.log("success!!!");// if form submitted
       })
       .fail(err => {
@@ -57,6 +57,12 @@ const resetForm = function() {
   $("#counter").text(maxCounterReset);
 };
 
+//animation
+const animation = function(div) {
+  $(div)
+    .animate({ left: "100px", opacity: "0" }, "slow")
+    .animate({ left: "0px", opacity: "1" }, "slow");
+};
 //Function to check form validation
 const formValidation = function(str) {
   if (str.length > 140) {
@@ -85,7 +91,6 @@ const loadTweets = function(method, url, cb) {
     method,
     url
   }).done(response => {
-   
     cb(response);
     console.log(response);
   });
@@ -116,8 +121,9 @@ const renderTweets = function(tweets) {
 
 //Create tweet element
 const createTweetElement = function(data) {
-  let date = new Date(data.created_at)
-  
+  let date = new Date(data.created_at);
+  $("#avatar").attr("src", data.user.avatars);
+  $("#userName").text(data.user.name);
   let element = $(` <article class="tweets">
  <header>
    <div class="headerWrapper">
@@ -162,9 +168,8 @@ $(document).scroll(function() {
     $(".scrollUpBar").fadeOut();
   }
 });
-$(document).ready(function(){
+$(document).ready(function() {
   $(".scrollUpBar").click(function() {
     $("html, body").animate({ scrollTop: 0 }, "slow");
   });
-  
-})
+});

@@ -15,7 +15,9 @@ nav {
 nav span {
   font-family: "Bungee", cursive;
 }
-
+#logo{
+  position: relative;
+}
 nav .wrapper{
   display: flex;
   flex-direction: column;
