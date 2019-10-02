@@ -1,55 +1,32 @@
 $(document).ready(function() {
-  //Hide the error message
+ 
   $("#errMessage").hide();
   $(".new-tweet").slideUp();
-  //scroll to bottom of page
   scrollDown(".fas");
-
-  //create a const for the form
   const form = $("#tweet-form");
-  //create an AJAX POST request
+
+  //Submit form
   form.on("submit", evt => {
-    //prevent default
     evt.preventDefault();
-    //Check for any XSS
     let tweet_content = escapedChar($(".tweetMessage").val());
     formValidation(tweet_content);
-    //Send a request
-    $.ajax({
-      url: "/tweets/",
-      type: "POST",
-      data: {
-        text: tweet_content
-      }
-    })
-      .done(() => {
-        loadNewTweets("GET", "/tweets", renderTweets);
-        resetForm();
-        animation("#logo");
-        // console.log("success!!!");// if form submitted
-      })
-      .fail(err => {
-        // console.log("error", err);//if error
-      })
-      .always(() => {
-        // console.log("completed!!!");//completed
-      });
+    $("body").on("click", () => {
+      $("#errMessage").slideUp();
+    });
   });
-  //Load tweets and reder them
+  //Load tweets
   loadTweets("GET", " http://localhost:8080/tweets", renderTweets);
 });
 
 //Function to prevent XSS
 function escapedChar(str) {
   if (typeof jQuery !== "undefined") {
-    // Create an empty div to use as a container,
-    // then put the raw text in and get the HTML
-    // equivalent out.
     return jQuery("<div/>")
       .text(str)
       .html();
   }
 }
+
 //Reset Form afer submission
 const resetForm = function() {
   const maxCounterReset = 140;
@@ -63,6 +40,7 @@ const animation = function(div) {
     .animate({ left: "100px", opacity: "0" }, "slow")
     .animate({ left: "0px", opacity: "1" }, "slow");
 };
+
 //Function to check form validation
 const formValidation = function(str) {
   if (str.length > 140) {
@@ -70,19 +48,32 @@ const formValidation = function(str) {
       .slideDown()
       .text("You are over 140 characters!!!!")
       .css({ color: "red" });
-    /*   .text("You are over 140 characters!!!!")
-      .css({ color: "red" }); */
+    return;
   }
   if (str === "") {
     $("#errMessage")
       .slideDown()
       .text("Type something!!");
-    /* .text("Type something!!")
-      .css({ color: "blue" }); */
+    return;
   }
-  $("body").on("click", () => {
-    $("#errMessage").slideUp();
-  });
+  $.ajax({
+    url: "/tweets/",
+    type: "POST",
+    data: {
+      text: str
+    }
+  })
+    .done(() => {
+      loadNewTweets("GET", "/tweets", renderTweets);
+      resetForm();
+      animation("#logo");
+    })
+    .fail(err => {
+    })
+    .always(() => {
+     
+    });
+  
 };
 
 //load tweets
@@ -122,8 +113,7 @@ const renderTweets = function(tweets) {
 //Create tweet element
 const createTweetElement = function(data) {
   let date = new Date(data.created_at);
-  $("#avatar").attr("src", data.user.avatars);
-  $("#userName").text(data.user.name);
+  $("#userName").text("Edgar");
   let element = $(` <article class="tweets">
  <header>
    <div class="headerWrapper">
